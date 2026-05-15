@@ -1,0 +1,20 @@
+# SEC-004: Dangerous Token Access
+name: Token Access Test
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Safe official action
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Unsafe external action
+        uses: some-org/deploy-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Another unsafe action
+        uses: third-party/publisher@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}

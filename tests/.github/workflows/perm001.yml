@@ -1,0 +1,11 @@
+# PERM-001: Excessive Permissions
+name: Excessive Permissions Test
+on: push
+permissions: write-all
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions: read-all
+    steps:
+      - uses: actions/checkout@v3
+      - run: echo "deploying"

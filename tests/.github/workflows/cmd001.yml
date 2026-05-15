@@ -1,0 +1,16 @@
+# CMD-001: Command Injection
+name: Command Injection Test
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Dangerous input in shell
+        run: echo "Hello ${{ github.event.inputs.user_input }}"
+        shell: bash
+      - name: Another injection
+        run: |
+          curl ${{ github.event.inputs.url }}
+          echo "done"

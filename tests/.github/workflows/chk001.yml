@@ -1,0 +1,11 @@
+# CHK-001: Checkout with Persisted Credentials
+name: Checkout Credentials Test
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: true
+      - run: echo "building"

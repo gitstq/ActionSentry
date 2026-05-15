@@ -1,0 +1,10 @@
+# AUT-001: Auto Merge Detection
+name: Auto Merge Test
+on: push
+jobs:
+  automerge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: pascalgn/automerge-action@v0.15.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,12 @@
+# ENV-001: Environment Variable Injection
+name: Env Injection Test
+on: push
+env:
+  BUILD_DIR: "${{ github.event.inputs.target_dir }}"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      CONFIG: "${{ github.event.pull_request.head.ref }}"
+    steps:
+      - run: echo "building"

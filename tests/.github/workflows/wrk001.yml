@@ -1,0 +1,8 @@
+# WRK-001: Unpinned Workflow Triggers
+name: Unpinned Triggers Test
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "building"

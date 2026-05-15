@@ -1,0 +1,12 @@
+# SEC-002: Hardcoded Secrets
+name: Hardcoded Secrets Test
+on: push
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      API_KEY: "sk-1234567890abcdef1234567890abcdef"
+      NPM_TOKEN: npm_abcdefghijklmnopqrstuvwxyz123456
+      SAFE_VAR: ${{ secrets.MY_SECRET }}
+    steps:
+      - run: echo "deploying"

